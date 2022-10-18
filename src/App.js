@@ -1,25 +1,125 @@
-import logo from './logo.svg';
-import './App.css';
+import Auth from './components/Auth'
+import { useCookies } from 'react-cookie'
+import React, { useEffect, useState } from 'react'
+import { StreamChat } from 'stream-chat'
+import {
+  Chat,
+  Channel,
+  Window,
+  ChannelHeader,
+  MessageList,
+  MessageInput,
+  Thread,
+  LoadingIndicator,
+  ChannelList,
+  useChatContext
+} from 'stream-chat-react'
 
-function App() {
+import 'stream-chat-react/dist/css/index.css'
+import './App.css'
+
+
+
+// const App= ()=> {
+//   const [cookies, setCookie, removeCookie] = useCookies(['user'])
+//   const [channel, setChannel] = useState(null)
+//   const [users, setUsers] = useState(null)
+  
+//   const client = StreamChat.getInstance('tjrf7ngdzv5g')
+//   const authToken = cookies.AuthToken
+
+//   useEffect( ()=>{
+    
+//     const loadData = async () => {
+   
+//         const { users} = await client.queryUsers({ role: 'user'})
+//         setUsers(users)
+//         await client.connectUser(
+//           {
+//               id: cookies.UserId
+//           },
+//           authToken
+//       )
+//       const channel = await client.channel('messaging', 'react-talk', {
+//           name: 'popo',
+//       })
+//       setChannel(channel)
+    
+// }
+// if (authToken) {loadData()}
+// if(users) return () => client.disconnectUser()
+// }, [])
+
+
+
+
+const App = () => {
+    const [cookies, setCookie, removeCookie] = useCookies(['user'])
+    const [channel, setChannel] = useState(null)
+    const [chatClient, setChatClient] = useState(null)
+
+    const client = StreamChat.getInstance('tjrf7ngdzv5g')
+    let authToken = cookies.AuthToken
+    let ID = cookies.UserId
+    console.log(authToken)
+
+    
+    const setupClient = async () => {
+        try {
+          
+            await client.connectUser(
+                {
+                  id: cookies.UserId,
+                  name: cookies.Username,
+                  email: cookies.Email,
+             
+                },
+                authToken
+            )
+            setChatClient(client)
+         
+        
+            let channel = await client.channel('messaging','qpalzm',{
+                name: 'meetronome',
+          
+            })
+ 
+          await channel.create()
+          channel.addMembers([ID])
+
+            setChannel(channel)
+
+           
+          
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    if (authToken) setupClient()
+    
+ 
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <>
+   {!authToken && <Auth />}
+        {authToken && <Chat client={client} theme="messaging light"> 
 
-export default App;
+        <Channel channel={channel}>
+
+          <Window>
+            <ChannelHeader />
+            <MessageList />
+            <MessageInput />
+          </Window>
+          <Thread />
+          
+        </Channel>
+      </Chat> }
+    </>
+  )
+}
+export default App
+
