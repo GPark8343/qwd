@@ -1,4 +1,5 @@
 import Auth from './components/Auth'
+import Logout from './components/Logout'
 import { useCookies } from 'react-cookie'
 import React, { useEffect, useState } from 'react'
 import { StreamChat } from 'stream-chat'
@@ -61,7 +62,7 @@ const App = () => {
     const client = StreamChat.getInstance('tjrf7ngdzv5g')
     let authToken = cookies.AuthToken
     let ID = cookies.UserId
-    console.log(authToken)
+
 
     
     const setupClient = async () => {
@@ -72,6 +73,7 @@ const App = () => {
                   id: cookies.UserId,
                   name: cookies.Username,
                   email: cookies.Email,
+        
              
                 },
                 authToken
@@ -79,7 +81,7 @@ const App = () => {
             setChatClient(client)
          
         
-            let channel = await client.channel('messaging','apple',{
+            let channel = await client.channel('messaging','samsung',{
                 name: 'meetronome',
           
             })
@@ -113,9 +115,9 @@ const App = () => {
             <ChannelHeader />
             <MessageList />
             <MessageInput />
+          <Logout />
           </Window>
           <Thread />
-          
         </Channel>
       </Chat> }
     </>

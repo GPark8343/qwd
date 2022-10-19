@@ -19,19 +19,19 @@ const Auth = function(){
 
 
     const handleLogin = async function(googleData){
-console.log(googleData)
+const id = googleData.googleId
 const email = googleData.wt.cu
 const ggToken = googleData.tokenObj.id_token
 const name = googleData.wt.Ad
 const response = await axios.post(`http://localhost:8000/signup`, {
-    ggToken, email, name
+    ggToken, email, name, id
         })
 
-        setCookie('UserId', response.data.userId) // uuid
+        setCookie('UserId', response.data.userId) // mail 앞에 있는 걸 ID로 함
         setCookie('Email', response.data.mail)
         setCookie('Username', response.data.name)
-        setCookie('AuthToken', response.data.token) // uuid를 스트림 토큰으로 바꾼 거
-     
+        setCookie('AuthToken', response.data.token) // userId를 스트림 토큰으로 바꾼 거
+       
         window.location.reload()
     }
 
