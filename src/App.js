@@ -79,7 +79,7 @@ const App = () => {
             setChatClient(client)
          
         
-            let channel = await client.channel('messaging','qpalzm',{
+            let channel = await client.channel('messaging','apple',{
                 name: 'meetronome',
           
             })
