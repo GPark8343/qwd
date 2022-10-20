@@ -15,7 +15,7 @@ import {
   ChannelList,
   useChatContext
 } from 'stream-chat-react'
-
+import {customStyles} from "./styles/customStyles"
 import 'stream-chat-react/dist/css/index.css'
 import './App.css'
 
@@ -107,8 +107,8 @@ const App = () => {
   return (
     <>
    {!authToken && <Auth />}
-        {authToken && <Chat client={client} theme="messaging light"> 
-
+        {authToken && <Chat client={client}  theme="messaging light"> 
+        <ChannelList showChannelSearch />
         <Channel channel={channel}>
 
           <Window>
