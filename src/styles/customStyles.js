@@ -1,24 +1,18 @@
 export const customStyles = {
-    '--border-radius-md': '0',
-    '--sm-p':'0',
 
-    '--bg-gradient-end': '#101214',
-    '--bg-gradient-start': '#070a0d',
-    '--black': '#ffffff',
-    '--blue-alice': '#00193d',
-    '--border': '#141924',
-    '--button-background': '#ffffff',
-    '--button-text': '#005fff',
-    '--grey': '#7a7a7a',
-    '--grey-gainsboro': '#2d2f2f',
-    '--grey-whisper': '#1c1e22',
-    '--modal-shadow': '#000000',
-    '--overlay': '#00000066',
-    '--overlay-dark': '#ffffffcc',
-    '--shadow-icon': '#00000080',
-    '--targetedMessageBackground': '#302d22',
-    '--transparent': 'transparent',
-    '--white': '#101418',
-    '--white-smoke': '#13151b',
-    '--white-snow': '#070a0d',
-};
+    '--primary-color': '#009688',
+     '--active-primary-color': '#004d40',
+     '--surface-color':'#f5f5f5',
+     '--secondary-surface-color': '#fafafa',
+     '--primary-surface-color': '#e0f2f1',
+     '--primary-surface-color-low-emphasis': '#edf7f7',
+     '--border-radius-circle':'6px',
+  };
+
+// --str-chat__primary-color: #009688;
+// --str-chat__active-primary-color: #004d40;
+// --str-chat__surface-color: #f5f5f5;
+// --str-chat__secondary-surface-color: #fafafa;
+// --str-chat__primary-surface-color: #e0f2f1;
+// --str-chat__primary-surface-color-low-emphasis: #edf7f7;
+// --str-chat__border-radius-circle: 6px;   

@@ -11,14 +11,13 @@ import {
   MessageList,
   MessageInput,
   Thread,
-  LoadingIndicator,
   ChannelList,
-  useChatContext
 } from 'stream-chat-react'
 import {customStyles} from "./styles/customStyles"
-import 'stream-chat-react/dist/css/index.css'
-import './App.css'
 
+import 'stream-chat-react/dist/css/index.css';
+
+import './App.css'
 
 
 // const App= ()=> {
@@ -107,8 +106,8 @@ const App = () => {
   return (
     <>
    {!authToken && <Auth />}
-        {authToken && <Chat client={client}  theme="messaging light"> 
-        <ChannelList showChannelSearch />
+        {authToken && <Chat client={client} customStyles={customStyles}> 
+     <ChannelList showChannelSearch/>
         <Channel channel={channel}>
 
           <Window>
@@ -124,4 +123,3 @@ const App = () => {
   )
 }
 export default App
-
