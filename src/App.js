@@ -14,9 +14,8 @@ import {
   ChannelList,
 } from 'stream-chat-react'
 import {customStyles} from "./styles/customStyles"
-
 import 'stream-chat-react/dist/css/index.css';
-
+import {CustomPreview} from './components/CustomPreview'
 import './App.css'
 
 
@@ -62,54 +61,70 @@ const App = () => {
     let authToken = cookies.AuthToken
     let ID = cookies.UserId
 
-
+useEffect(()=>{
+  const setupClient = async () => {
+    try {
+      
+        await client.connectUser(
+            {
+              id: cookies.UserId,
+              name: cookies.Username,
+              email: cookies.Email,
     
-    const setupClient = async () => {
-        try {
-          
-            await client.connectUser(
-                {
-                  id: cookies.UserId,
-                  name: cookies.Username,
-                  email: cookies.Email,
-        
-             
-                },
-                authToken
-            )
-            setChatClient(client)
-         
-        
-            let channel = await client.channel('messaging','samsung',{
-                name: 'meetronome',
-          
-            })
- 
-          await channel.create()
-          channel.addMembers([ID])
+    
+            },
+            authToken
+        )
+        setChatClient(client)
 
-            setChannel(channel)
-
-           
-          
-        } catch (err) {
-            console.log(err)
-        }
+    } catch (err) {
+        console.log(err)
     }
+}
 
-    if (authToken) setupClient()
+if (authToken) setupClient()
+},[])
     
- 
 
+
+useEffect(()=>{
+  const setupClient = async () => {
+    try {
+        const channel = await client.channel('messaging','apple',{
+            name: 'popo',
+      
+        })
+
+      await channel.watch()
+
+      channel.addMembers([ID])
+
+        setChannel(channel)
+
+       
+      
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+if (authToken) setupClient()
+},[channel])
+
+
+
+    
+ const filters = {type: 'messaging', members: { $in:[ID]}}
+const sort = {last_message_at: -1}
 
 
   return (
     <>
    {!authToken && <Auth />}
-        {authToken && <Chat client={client} customStyles={customStyles}> 
-     <ChannelList showChannelSearch/>
-        <Channel channel={channel}>
-
+        {authToken && <Chat client={client}  customStyles={customStyles}> 
+     <ChannelList showChannelSearch filters={filters} 
+     sort={sort}  Preview={CustomPreview} />
+        <Channel>
           <Window>
             <ChannelHeader />
             <MessageList />
