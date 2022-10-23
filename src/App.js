@@ -70,11 +70,11 @@ const App = () => {
       if (authToken) {
 
 
-        const { users } = await client.queryUsers({ 
-          role: 'member'
-       })
-        setUsers(users)
-        console.log(users);
+      //   const { users } = await client.queryUsers({ 
+      //     role: 'member'
+      //  })
+      //   setUsers(users)
+      //   console.log(users); // 친구들 리스트 보여줄 거임 나중에 사용
       }
     }
     userSet()
@@ -118,8 +118,12 @@ const App = () => {
 
         channel.addMembers([ID])
 
+       
         
         setChannel(channel)
+        
+        const Users  = await channel.queryMembers({})
+        setUsers(Users.members)
 
       
 
@@ -144,7 +148,7 @@ const App = () => {
       <div className='str-chat'>{authToken && <Chat client={client} customStyles={customStyles}>
         <ChannelList showChannelSearch filters={filters}
           sort={sort} Preview={CustomPreview} />
-        <Channel>
+        <Channel >
           <div className='window'><Window>
             <ChannelHeader />
             <MessageList />
@@ -153,7 +157,7 @@ const App = () => {
             <Logout />
             <Thread />
           </Window></div>
-          <MessagingContainer users={users} />
+          <MessagingContainer key={ID} users={users} />
         </Channel>
       </Chat>}</div>
     </>

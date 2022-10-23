@@ -1,15 +1,17 @@
 import { FaHorseHead, FaSmile } from 'react-icons/fa'
 import './UserList.css';
 const UserList = ({users}) => {
-
-    return (
+console.log(users);
+    return (<>
+    <p>channel member list</p>
         <div className="userlist-container">
             {users?.map(user => (
-                <li key={user.id}>
-                    {user.role === 'user' ? <FaHorseHead/> : <FaSmile/>}
-                <p>{user.name}</p>
+                <li key={user.user.id}>
+                    {user.user.role === 'member' ? <FaHorseHead/> : <FaSmile/>}
+                <p>{user.user.name}</p>
             </li>))}
         </div>
+        </>
     )
 }
 
