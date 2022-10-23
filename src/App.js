@@ -67,8 +67,11 @@ const App = () => {
   useEffect(() => {
     const userSet = async () => {
       if (authToken) {
-        const { users } = await client.queryUsers({ role: 'user' })
+       
+        
+        const { users } = await client.queryUsers( { role: { $in: ['user'] } })
         setUsers(users)
+        console.log(users);
       }
     }
     userSet()
@@ -112,7 +115,6 @@ const App = () => {
         await channel.watch()
 
         channel.addMembers([ID])
-
         setChannel(channel)
 
 

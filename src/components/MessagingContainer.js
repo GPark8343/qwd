@@ -8,13 +8,13 @@ const MessagingContainer = ({users}) => {
     const [userListVisible, setUserListVisible] = useState(false)
 
    
-    return (
+    return (<>
         <div className='messaging-container'>
             {!userListVisible && (
-                <Window>
+               
                     <FaUsers className="icon" onClick={() => setUserListVisible(true)}/>
-                </Window>
-            )}
+               
+            )} </div>
             {userListVisible && (
                 <Window>
                     <div className="chat-container">
@@ -25,7 +25,8 @@ const MessagingContainer = ({users}) => {
 
             )}
            
-        </div>
+        
+        </>
     )
 }
 
