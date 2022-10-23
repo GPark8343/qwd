@@ -1,7 +1,7 @@
 import Auth from './components/Auth'
 import Logout from './components/Logout'
 import MessagingContainer from './components/MessagingContainer'
-import UserList from './components/UserList'
+import Member from './components/Member'
 import { useCookies } from 'react-cookie'
 import React, { useEffect, useState } from 'react'
 import { StreamChat } from 'stream-chat'
@@ -55,6 +55,7 @@ import './App.css'
 
 
 const App = () => {
+ 
   const [cookies, setCookie, removeCookie] = useCookies(['user'])
   const [channel, setChannel] = useState(null)
   const [chatClient, setChatClient] = useState(null)
@@ -62,14 +63,16 @@ const App = () => {
 
   const client = StreamChat.getInstance('tjrf7ngdzv5g')
   let authToken = cookies.AuthToken
-  let ID = cookies.UserId
+  const ID = cookies.UserId
 
   useEffect(() => {
     const userSet = async () => {
       if (authToken) {
-       
-        
-        const { users } = await client.queryUsers( { role: { $in: ['user'] } })
+
+
+        const { users } = await client.queryUsers({ 
+          role: 'member'
+       })
         setUsers(users)
         console.log(users);
       }
@@ -88,12 +91,11 @@ const App = () => {
             name: cookies.Username,
             email: cookies.Email,
 
-
           },
           authToken
         )
         setChatClient(client)
-
+   
       } catch (err) {
         console.log(err)
       }
@@ -115,9 +117,11 @@ const App = () => {
         await channel.watch()
 
         channel.addMembers([ID])
+
+        
         setChannel(channel)
 
-
+      
 
       } catch (err) {
         console.log(err)
@@ -141,12 +145,13 @@ const App = () => {
         <ChannelList showChannelSearch filters={filters}
           sort={sort} Preview={CustomPreview} />
         <Channel>
-        <div className='window'><Window>
+          <div className='window'><Window>
             <ChannelHeader />
             <MessageList />
             <MessageInput />
+            <Member ID={ID} />
             <Logout />
-            <Thread/>
+            <Thread />
           </Window></div>
           <MessagingContainer users={users} />
         </Channel>
